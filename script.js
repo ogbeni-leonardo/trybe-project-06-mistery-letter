@@ -21,6 +21,28 @@ function cleanChildren(selector) {
   }
 }
 
+// Escolhe um valor aleatório de uma array
+function randomChoice(array) {
+  const index = parseInt(Math.random() * array.length, 10);
+  return array[index];
+}
+
+// Classes para estilização aleatória
+const grupoEstilo = ['newspaper', 'magazine1', 'magazine2'];
+const grupoTamanho = ['medium', 'big', 'reallybig'];
+const grupoRotacao = ['rotateleft', 'rotateright'];
+const grupoInclinacao = ['skewleft', 'skewright'];
+
+// Escolhe classes aleatórias e retorna para o elemento
+function randomClass() {
+  const estilo = randomChoice(grupoEstilo);
+  const tamanho = randomChoice(grupoTamanho);
+  const rotacao = randomChoice(grupoRotacao);
+  const inclinacao = randomChoice(grupoInclinacao);
+
+  return `${estilo} ${tamanho} ${rotacao} ${inclinacao}`;
+}
+
 // Pega os valores inserido no input e os aplica ao parágrafo
 function getInputValue() {
   const textInput = byId('carta-texto').value.trim();
@@ -40,6 +62,7 @@ function getInputValue() {
   for (let index = 0; index < textInputSplited.length; index += 1) {
     const newSpan = createElement('span');
     newSpan.innerText = textInputSplited[index];
+    newSpan.className = randomClass();
 
     paragraph.appendChild(newSpan);
   }
