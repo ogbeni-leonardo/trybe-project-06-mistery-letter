@@ -3,22 +3,9 @@ function byId(id) {
   return document.getElementById(id);
 }
 
-// Retorna elemento(s) segundo seu seletor
-function qsa(selector) {
-  return document.querySelectorAll(selector);
-}
-
 // Cria um novo elemento e o retorna
 function createElement(elementName) {
   return document.createElement(elementName);
-}
-
-// Limpar todos os elementos filhos de um elemento pai segundo o seletor
-function cleanChildren(selector) {
-  const childElements = qsa(selector);
-  for (let index = 0; index < childElements.length; index += 1) {
-    childElements[index].remove();
-  }
 }
 
 // Escolhe um valor aleatório de uma array
@@ -43,34 +30,49 @@ function randomClass() {
   return `${estilo} ${tamanho} ${rotacao} ${inclinacao}`;
 }
 
-// Pega os valores inserido no input e os aplica ao parágrafo
-function getInputValue() {
-  const textInput = byId('carta-texto').value.trim();
-  const paragraph = byId('carta-gerada');
-
-  // Remova todos os elementos span do parágrafo
-  cleanChildren('#carta-gerada span');
-
-  if (textInput.length === 0) {
-    paragraph.innerText = 'Por favor, digite o conteúdo da carta.';
-    return;
-  }
-
-  // O texto será quebrado e cada palavra se torará um item da lista
-  const textInputSplited = textInput.split(' ');
-
+// Cada elemento do array será um span e será aplicado ao parágrafo
+function applyToParagraph(array) {
   // O número de palavras é aplicado ao contador
-  byId('carta-contador').innerText = textInputSplited.length;
+  byId('carta-contador').innerText = array.length;
 
-  for (let index = 0; index < textInputSplited.length; index += 1) {
+  const paragraph = byId('carta-gerada');
+  // Limpe todo o conteúdo anterior do parágrafo
+  paragraph.innerHTML = '';
+
+  // Percorra cada um dos elementos e crie um span para cada um deles
+  for (let index = 0; index < array.length; index += 1) {
     const newSpan = createElement('span');
-    newSpan.innerText = textInputSplited[index];
+    newSpan.innerText = array[index];
     newSpan.className = randomClass();
-    newSpan.onclick = (e) => (e.target.className = randomClass());
+    newSpan.addEventListener('click', (e) => {
+      e.target.className = randomClass();
+    });
 
     paragraph.appendChild(newSpan);
   }
 }
 
+// Pega os valores inserido no input e retorna cada palavra como um item numa lista
+function getInputValue() {
+  const textInput = byId('carta-texto').value.trim();
+
+  if (textInput.length === 0) {
+    byId('carta-gerada').innerHTML = 'Por favor, digite o conteúdo da carta.';
+    byId('carta-contador').innerText = '0';
+    return;
+  }
+  // O texto será quebrado e cada palavra se torará um item da lista
+  const textInputSplited = textInput.split(' ');
+
+  return applyToParagraph(textInputSplited);
+}
+
 const criarCarta = byId('criar-carta');
 criarCarta.onclick = getInputValue;
+
+const cartaTexto = byId('carta-texto');
+cartaTexto.onkeyup = (e) => {
+  if (e.key === 'Enter') {
+    getInputValue();
+  }
+};
