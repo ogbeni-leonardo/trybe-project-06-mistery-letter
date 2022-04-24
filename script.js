@@ -24,12 +24,19 @@ function cleanChildren(selector) {
 // Pega os valores inserido no input e os aplica ao parágrafo
 function getInputValue() {
   const textInput = byId('carta-texto').value.trim();
-  if (textInput.length === 0) return;
-
   const paragraph = byId('carta-gerada');
+
+  // Remova todos os elementos span do parágrafo
   cleanChildren('#carta-gerada span');
 
+  if (textInput.length === 0) {
+    paragraph.innerText = 'Por favor, digite o conteúdo da carta.';
+    return;
+  }
+
+  // O texto será quebrado e cada palavra se torará um item da lista
   const textInputSplited = textInput.split(' ');
+
   for (let index = 0; index < textInputSplited.length; index += 1) {
     const newSpan = createElement('span');
     newSpan.innerText = textInputSplited[index];
