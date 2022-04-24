@@ -28,3 +28,22 @@
   background-image: url('images/pink-pattern.png');
   color: rgb(255 0 255);
 }
+
+.medium {
+  padding: 8px;
+  font-size: 20px;
+}
+
+.big {
+  padding: 10px;
+  font-size: 30px;
+}
+
+.reallybig {
+  padding: 15px;
+  font-size: 40px;
+}
+
+.rotateleft {
+  transform: rotate(-5deg);
+}
