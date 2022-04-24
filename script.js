@@ -59,6 +59,9 @@ function getInputValue() {
   // O texto será quebrado e cada palavra se torará um item da lista
   const textInputSplited = textInput.split(' ');
 
+  // O número de palavras é aplicado ao contador
+  byId('carta-contador').innerText = textInputSplited.length;
+
   for (let index = 0; index < textInputSplited.length; index += 1) {
     const newSpan = createElement('span');
     newSpan.innerText = textInputSplited[index];
