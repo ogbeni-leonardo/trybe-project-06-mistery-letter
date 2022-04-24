@@ -63,6 +63,7 @@ function getInputValue() {
     const newSpan = createElement('span');
     newSpan.innerText = textInputSplited[index];
     newSpan.className = randomClass();
+    newSpan.onclick = (e) => (e.target.className = randomClass());
 
     paragraph.appendChild(newSpan);
   }
